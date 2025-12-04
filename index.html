@@ -3,144 +3,828 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+    <title>Adishesha R - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #ec4899;
+            --dark-bg: #0f172a;
+            --dark-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 50px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-title {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .greeting {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .name-highlight {
+            font-size: 4rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .role {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .resume-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .resume-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+        }
+
+        .resume-btn:active {
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 100px 0;
+            background: var(--dark-secondary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .imgtag {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #round-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid;
+            border-image: var(--gradient) 1;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        #round-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 100px 0;
+            background: var(--dark-bg);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .skill-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .skill-list li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+            background: var(--dark-secondary);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .skill-list li:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .skill-list li img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .skill-list li span {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 100px 0;
+            background: var(--dark-secondary);
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--dark-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .project-card.clickable {
+            cursor: pointer;
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .project-link {
+            margin-top: 1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .project-card.clickable:hover .project-link {
+            transform: translateX(5px);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+            background: var(--dark-bg);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        #contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            border: 2px solid var(--dark-secondary);
+            border-radius: 8px;
+            background: var(--dark-secondary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .submit-btn {
+            padding: 15px 30px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--dark-secondary);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .social-link:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .social-link img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .social-link span {
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-secondary);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--dark-secondary);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 2rem 0;
+                gap: 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                padding: 1rem 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .name-highlight {
+                font-size: 2.5rem;
+            }
+
+            .role {
+                font-size: 1.3rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-text {
+                order: 2;
+            }
+
+            .imgtag {
+                order: 1;
+            }
+
+            #round-image {
+                width: 250px;
+                height: 250px;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+
+            .skill-list {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .name-highlight {
+                font-size: 2rem;
+            }
+
+            .greeting {
+                font-size: 1.2rem;
+            }
+
+            .role {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-text h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav>
-            <ul>
-                <li><u><a href="#about"><b>About</b></a></u></li>
-                <li><u><a href="#projects"><b>Projects</b></a></u></li>
-                <li><u><a href="#contact-info"><b>Contact</b></a></u></li>
-            </ul>
+            <div class="nav-container">
+                <div class="logo">AR</div>
+                <ul class="nav-menu">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact-info">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </nav>
     </header>
-    <section id="name">
-        <pre id="hb"><b>Hi, I am Adishesha R
-Backend Java Developer
-        </b></pre>
-        <button onclick="window.location.href='Resume.pdf'" class="botao">
-            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mysvg">
-                <path id="Vector" d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12" stroke="#f1f1f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <span class="texto"><b>Resume</b></span>
-        </button> 
-    </section>
-    <br></br>
-    <section id="about">
-        <div class="about-text">
-            <h2>About Me</h2>
-            <br></br>
-            <p>
-                I’m Adishesha R, a software developer from Bengaluru. Currently Working at G10X, I work with Java, MySQL, and frontend technologies. My background includes machine learning projects with Pantech Solutions.
-                I hold a B.E. in Information Science from Cambridge Institute of Technology and am skilled in Java, Python, C++, and more. Passionate about solving real-world problems, I’m always ready for new challenges.
-                Connect with me on Social links given below.
-                
-                This format highlights your key points in a concise, impactful way while adding a touch of professionalism.
-           </p>
-        </div>
-        <div class="imgtag">
-            <img id="round-image" src="IMG_9578.JPG" alt="Adishesha R"/>
+
+    <section id="name" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="greeting">Hi, I am</span>
+                <span class="name-highlight">Adishesha R</span>
+                <span class="role">Backend Java Developer</span>
+            </h1>
+            <button onclick="window.location.href='Resume.pdf'" class="resume-btn">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12" stroke="#f1f1f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <span>Resume</span>
+            </button>
         </div>
     </section>
-    
-    <section id="skills">
-        <h1><u><b>Technical Skills</b></u></h1>
-        <ul class="skill-list">
-            <li><b><img src="https://cdn-icons-png.flaticon.com/512/226/226777.png" alt="Java Logo">Java</b></li>
-            <li><b><img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python Logo">Python</b></li>
-            <li><b><img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML Logo">HTML</b></li>
-            <li><b><img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS Logo">CSS</b></li>
-            <li><b><img src="https://cdn-icons-png.flaticon.com/512/1046/1046652.png" alt="Manual Testing Logo">Manual Testing</b></li>
-            <li><b><img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript Logo">JavaScript</b></li>
-            <li><b><img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" alt="React Logo">React.js</b></li>
-            <li><b><img src="https://cdn-icons-png.flaticon.com/512/1251/1251327.png" alt="Hibernate Logo">Hibernate</b></li>
-        </ul>
-    </section>
-    
 
-    <section id="projects">
-        <h1><u><b>Projects</b></u></h1>
-
-        <div class="projects-container">
-            <div class="project">
-                <h2>Book My Doctor</h2>
-                <p>A full-stack web application that allows patients to book appointments with doctors online, eliminating the need to physically wait in long queues.</p>
-            </div>
-
-            <div class="project">
-                <h2>Plant Disease Detection Using Image</h2>
-                <p>Uses machine learning to classify plant diseases from image data, facilitating early detection and improved management strategies.</p>
-            </div>
-
-            <div class="project">
-                <h2>Gym Management System</h2>
-                <p>Records entry and exit data in a gym, using HTML and PHP for the front end and a database in the background to store data.</p>
-            </div>
-            <div class="project">
-                <h2>Employee and Student Management System</h2>
-                <p>
-                    Developed an Employee and Student Management System using Spring Boot for the backend. It provides
-                    role-based access for admins, employees, and students to manage personal details, attendance, and
-                    performance. The system supports CRUD operations, ensuring efficient data handling with a focus on
-                    security and scalability</p>
-            </div>
-            <div class="project">
-                <h2>Ecommerce</h2>
-                <p>I am working on Ecommerce Project using SpringBoot as Backend Framework. And backend database is H2-Console. Thymeleaf for FrontEnd of the application. Still working on cart and Payment Integration using RazorPay</p>
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <p>
+                        I'm Adishesha R, a software developer from Bengaluru. Currently Working at G10X, I work with Java, MySQL, and frontend technologies. My background includes machine learning projects with Pantech Solutions.
+                    </p>
+                    <p>
+                        I hold a B.E. in Information Science from Cambridge Institute of Technology and am skilled in Java, Python, C++, and more. Passionate about solving real-world problems, I'm always ready for new challenges.
+                    </p>
+                    <p>
+                        Connect with me on Social links given below.
+                    </p>
+                </div>
+                <div class="imgtag">
+                    <img id="round-image" src="IMG_9578.JPG" alt="Adishesha R"/>
+                </div>
             </div>
         </div>
     </section>
-    <section id="contact-info">
-        <h2>Contact Me</h2>
-        <form id="contact-form" action="https://api.web3forms.com/submit" method="post">
-            <input type="hidden" name="access_key" value="d927908d-2a4e-4c3f-a27a-9e610aa223b6">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="description">Message:</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
-            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-            <button type="submit">Send Message</button>
-        </form>
+
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <ul class="skill-list">
+                <li>
+                    <img src="https://cdn-icons-png.flaticon.com/512/226/226777.png" alt="Java Logo">
+                    <span>Java</span>
+                </li>
+                <li>
+                    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python Logo">
+                    <span>Python</span>
+                </li>
+                <li>
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML Logo">
+                    <span>HTML</span>
+                </li>
+                <li>
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS Logo">
+                    <span>CSS</span>
+                </li>
+                <li>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1046/1046652.png" alt="Manual Testing Logo">
+                    <span>Manual Testing</span>
+                </li>
+                <li>
+                    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript Logo">
+                    <span>JavaScript</span>
+                </li>
+                <li>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" alt="React Logo">
+                    <span>React.js</span>
+                </li>
+                <li>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1251/1251327.png" alt="Hibernate Logo">
+                    <span>Hibernate</span>
+                </li>
+            </ul>
+        </div>
     </section>
-    
-    <section id="contact-info">
-        <ul>
-            <li>
-                <a href="https://github.com/adishesha-r" target="_blank">
-                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" />
-                </a>
-            </li>
-            <li>
-                <a href="https://www.linkedin.com/in/adishesha-rbharadwaj-388154203" target="_blank">
-                    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn Logo" />
-                </a>
-            </li>
-            <li>
-                <a href="mailto:mycodeadi21@gmail.com">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Gmail_Icon_%282013-2020%29.svg" alt="Email Logo" />
-                </a>
-            </li>
-        </ul>
+
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <h3>Book My Doctor</h3>
+                    <p>A full-stack web application that allows patients to book appointments with doctors online, eliminating the need to physically wait in long queues.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Plant Disease Detection Using Image</h3>
+                    <p>Uses machine learning to classify plant diseases from image data, facilitating early detection and improved management strategies.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Gym Management System</h3>
+                    <p>Records entry and exit data in a gym, using HTML and PHP for the front end and a database in the background to store data.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Employee and Student Management System</h3>
+                    <p>Developed an Employee and Student Management System using Spring Boot for the backend. It provides role-based access for admins, employees, and students to manage personal details, attendance, and performance. The system supports CRUD operations, ensuring efficient data handling with a focus on security and scalability.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Ecommerce</h3>
+                    <p>I am working on Ecommerce Project using SpringBoot as Backend Framework. And backend database is H2-Console. Thymeleaf for FrontEnd of the application. Still working on cart and Payment Integration using RazorPay</p>
+                </div>
+                <div class="project-card clickable" onclick="window.open('https://adishesha-r.github.io/CHAN_EVENTS/', '_blank')">
+                    <h3>Event Management - CHAN EVENTS</h3>
+                    <p>A professional event management website for CHAN EVENTS, showcasing services for weddings, corporate events, birthdays, and premium catering. Features a modern, responsive design with smooth animations and elegant UI.</p>
+                    <div class="project-link">
+                        <span>Visit Project →</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-    
+
+    <section id="contact-info" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-content">
+                <form id="contact-form" action="https://api.web3forms.com/submit" method="post">
+                    <input type="hidden" name="access_key" value="d927908d-2a4e-4c3f-a27a-9e610aa223b6">
+                    
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Message:</label>
+                        <textarea id="description" name="description" rows="4" required></textarea>
+                    </div>
+                    
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+
+                <div class="social-links">
+                    <a href="https://github.com/adishesha-r" target="_blank" class="social-link">
+                        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" />
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/adishesha-rbharadwaj-388154203" target="_blank" class="social-link">
+                        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn Logo" />
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="mailto:mycodeadi21@gmail.com" class="social-link">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Gmail_Icon_%282013-2020%29.svg" alt="Email Logo" />
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2025 Adishesha R</p>
+        <div class="container">
+            <p>&copy; 2025 Adishesha R. All Rights Reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
