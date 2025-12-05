@@ -1,434 +1,511 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Adishesha R - Portfolio</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Adishesha R — Portfolio</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+<style>
+  /* ===== Base / Utility ===== */
+  :root{
+    --bg: #0f172a;
+    --surface: #0b1220;
+    --muted: #9ca3af;
+    --text: #e6eef8;
+    --accent: #667eea;
+    --glass: rgba(255,255,255,0.04);
+    --card-radius: 14px;
+    --max-width: 1200px;
+  }
 
-        :root {
-            --bg: #0a0f1f;
-            --card-bg: rgba(255,255,255,0.08);
-            --glass: rgba(255,255,255,0.15);
-            --primary: #6a5acd;
-            --secondary: #8a2be2;
-            --accent: #ff2d75;
-            --text: #f4f4f8;
-            --subtext: #c9c9d4;
-            --gradient: linear-gradient(135deg, #6a5acd, #8a2be2, #ff2d75);
-        }
+  /* Theme variables altered by JS when switching themes */
+  :root.theme-A { --accent: linear-gradient(135deg,#667eea,#764ba2); --accent-solid:#667eea; --accent-2:#764ba2; --primary-contrast:#ffffff; }
+  :root.theme-B { --accent: linear-gradient(135deg,#0ea5e9,#06b6d4); --accent-solid:#06b6d4; --accent-2:#0ea5e9; --primary-contrast:#03202b; }
+  :root.theme-C { --accent: linear-gradient(135deg,#ff0066,#8b5cf6); --accent-solid:#ff0066; --accent-2:#8b5cf6; --primary-contrast:#0a0a0a; }
+  :root.theme-D { --accent: linear-gradient(135deg,#0ea5a1,#2563eb); --accent-solid:#2563eb; --accent-2:#0ea5a1; --primary-contrast:#ffffff; }
 
-        body {
-            font-family: "Poppins", sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-        }
+  /* Light mode overrides */
+  :root.light {
+    --bg: #f6f8fb;
+    --surface: #ffffff;
+    --muted: #475569;
+    --text: #0b1220;
+    --glass: rgba(2,6,23,0.03);
+  }
 
-        /* Header */
-        header {
-            width: 100%;
-            position: fixed;
-            top:0;
-            background: rgba(10,15,31,0.65);
-            backdrop-filter: blur(12px);
-            padding: 18px 0;
-            z-index:1000;
-            border-bottom:1px solid rgba(255,255,255,0.1);
-        }
+  html,body{ height:100%; margin:0; font-family:'Poppins',sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+  .wrap{ max-width:var(--max-width); margin:0 auto; padding:28px; box-sizing:border-box; }
 
-        nav {
-            max-width: 1200px;
-            margin:auto;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding: 0 20px;
-        }
+  /* Header */
+  header{ position:fixed; top:12px; left:0; right:0; z-index:1000; display:flex; justify-content:center; pointer-events:none; }
+  .topbar{ width:100%; max-width:var(--max-width); display:flex; align-items:center; justify-content:space-between; gap:12px; pointer-events:auto; padding:8px 12px; margin:0 12px; border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    box-shadow: 0 6px 30px rgba(2,6,23,0.4); border:1px solid rgba(255,255,255,0.02); }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .logo{ width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; letter-spacing:0.6px;
+    background: var(--glass); border: 1px solid rgba(255,255,255,0.03); color:var(--text); }
+  .brand h4{ margin:0; font-size:16px; font-weight:700; }
+  .controls{ display:flex; gap:10px; align-items:center; }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+  select#themeSelect{ padding:8px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--text); font-weight:600; }
+  .toggle-btn{ padding:8px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background:transparent; cursor:pointer; display:flex; align-items:center; gap:8px; color:var(--text); }
 
-        .nav-menu {
-            display:flex;
-            gap: 2rem;
-            list-style:none;
-        }
+  /* HERO */
+  .hero{ padding-top:110px; padding-bottom:40px; display:grid; grid-template-columns: 1fr 420px; gap:32px; align-items:center; }
+  .hero-left{ padding:28px 18px; }
+  .greeting{ color:var(--muted); font-weight:500; font-size:16px; }
+  .name{ font-size:44px; font-weight:800; line-height:1; margin:12px 0; background:var(--accent); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .role{ font-size:20px; color:var(--muted); margin-bottom:18px; }
+  .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+  .btn{ padding:12px 18px; border-radius:12px; font-weight:700; cursor:pointer; border:none; display:inline-flex; gap:10px; align-items:center; }
+  .btn-primary{ background:var(--accent); color:var(--primary-contrast); box-shadow:0 8px 30px rgba(0,0,0,0.25); }
+  .btn-outline{ background:transparent; color:var(--text); border:1px solid rgba(255,255,255,0.06); }
 
-        .nav-menu a {
-            color: var(--subtext);
-            text-decoration:none;
-            font-weight:500;
-            transition:0.3s;
-            position:relative;
-        }
+  /* Right card */
+  .hero-card{ background:var(--surface); padding:18px; border-radius:14px; box-shadow: 0 18px 60px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03); min-height:240px; display:flex; flex-direction:column; gap:12px; justify-content:center; }
+  .profile-row{ display:flex; gap:14px; align-items:center; }
+  #round-image{ width:120px; height:120px; border-radius:16px; object-fit:cover; border:4px solid transparent; background:linear-gradient(135deg,#667eea,#764ba2); padding:4px; }
+  .mini{ font-size:13px; color:var(--muted); }
 
-        .nav-menu a:hover {
-            color: var(--text);
-        }
+  /* SECTIONS */
+  section{ margin-top:32px; padding:28px 0; }
+  .section-title{ font-size:26px; font-weight:700; margin-bottom:18px; }
+  .grid{ display:grid; gap:18px; }
 
-        .nav-menu a::after {
-            content:"";
-            position:absolute;
-            bottom:-6px;
-            left:0;
-            width:0%;
-            height:2px;
-            background:var(--gradient);
-            transition:0.3s;
-        }
+  /* About */
+  .about-grid{ grid-template-columns: 1fr 420px; gap:28px; align-items:center; }
+  .about-card{ background:var(--surface); padding:20px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); box-shadow:0 12px 40px rgba(2,6,23,0.5); }
+  .about-card p{ color:var(--muted); line-height:1.6; }
 
-        .nav-menu a:hover::after {
-            width:100%;
-        }
+  /* SKILLS */
+  .skills-grid{ grid-template-columns: repeat(2, 1fr); gap:14px; }
+  .skill{ background:var(--surface); padding:14px; border-radius:12px; display:flex; flex-direction:column; gap:8px; border:1px solid rgba(255,255,255,0.02); }
+  .skill .meta{ display:flex; justify-content:space-between; font-weight:600; color:var(--muted); }
+  .bar{ height:10px; background:rgba(255,255,255,0.06); border-radius:8px; overflow:hidden; margin-top:6px; }
+  .bar > i{ display:block; height:100%; background:var(--accent-solid, #667eea); width:0%; border-radius:8px; transition:width 900ms cubic-bezier(.2,.9,.3,1); }
 
-        /* Hero */
-        .hero {
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            padding-top:120px;
-            background: radial-gradient(circle at 20% 30%, #1f2642 0%, #0a0f1f 70%);
-        }
+  /* Projects */
+  .projects-grid{ grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); }
+  .project{ background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); display:flex; flex-direction:column; gap:12px; transition:transform .25s ease; }
+  .project:hover{ transform:translateY(-6px); box-shadow:0 20px 60px rgba(2,6,23,0.6); border-image:var(--accent) 1; }
+  .project h3{ margin:0; font-size:18px; }
+  .project p{ color:var(--muted); line-height:1.5; font-size:14px; }
+  .project .meta{ display:flex; justify-content:space-between; color:var(--muted); font-size:13px; }
 
-        .hero h1 {
-            display:flex;
-            flex-direction:column;
-            gap:1rem;
-        }
+  /* CONTACT */
+  .contact-grid{ grid-template-columns: 1fr 360px; gap:18px; align-items:start; }
+  #contact-form{ background:var(--surface); padding:18px; border-radius:12px; display:flex; flex-direction:column; gap:12px; border:1px solid rgba(255,255,255,0.03); }
+  #contact-form input, #contact-form textarea{ background:transparent; color:var(--text); border:1px solid rgba(255,255,255,0.06); padding:10px 12px; border-radius:10px; }
+  .social-links a{ display:flex; gap:10px; align-items:center; background:var(--surface); padding:10px; border-radius:10px; color:var(--text); text-decoration:none; border:1px solid rgba(255,255,255,0.03); }
 
-        .greeting {
-            font-size:1.5rem;
-            color:var(--subtext);
-        }
+  /* Footer */
+  footer{ margin-top:36px; padding:18px 0; text-align:center; color:var(--muted); }
 
-        .name-highlight {
-            font-size:4rem;
-            font-weight:700;
-            background:var(--gradient);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-        }
+  /* Responsive */
+  @media (max-width: 1024px){
+    .hero, .about-grid{ grid-template-columns: 1fr; }
+    .hero-card{ order:2; }
+    .hero-left{ order:1; }
+    .contact-grid{ grid-template-columns: 1fr; }
+    .skills-grid{ grid-template-columns: 1fr; }
+  }
 
-        .role {
-            font-size:1.8rem;
-            color:var(--subtext);
-        }
+  /* small screens: minimize topbar spacing */
+  @media (max-width:480px){
+    .topbar{ padding:8px; margin:0 8px; }
+    .logo{ width:44px; height:44px; font-size:16px; }
+  }
 
-        .resume-btn {
-            margin-top:2rem;
-            background:var(--gradient);
-            padding:15px 35px;
-            border-radius:50px;
-            font-weight:600;
-            font-size:1rem;
-            border:none;
-            cursor:pointer;
-            color:white;
-            box-shadow:0 0 20px rgba(138,43,226,0.4);
-            transition:0.3s;
-        }
+  /* subtle entrance animation */
+  .reveal { opacity:0; transform: translateY(12px); transition: all .7s cubic-bezier(.2,.9,.3,1); }
+  .reveal.show { opacity:1; transform:none; }
 
-        .resume-btn:hover {
-            transform:scale(1.05);
-        }
-
-        /* Section Titles */
-        .section-title {
-            text-align:center;
-            font-size:2.5rem;
-            margin-bottom:3.5rem;
-            background:var(--gradient);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-        }
-
-        section {
-            padding:100px 20px;
-        }
-
-        .container {
-            max-width:1200px;
-            margin:auto;
-        }
-
-        /* About Section */
-        .about-section {
-            background: var(--bg);
-        }
-
-        .about-content {
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:4rem;
-            align-items:center;
-        }
-
-        #round-image {
-            width:300px;
-            height:300px;
-            border-radius:50%;
-            border:6px solid transparent;
-            background-image:var(--gradient);
-            padding:4px;
-        }
-
-        /* Skills */
-        .skill-list {
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
-            gap:1.3rem;
-        }
-
-        .skill-list li {
-            background:var(--card-bg);
-            padding:1.5rem;
-            border-radius:12px;
-            text-align:center;
-            font-size:1.1rem;
-            border:1px solid transparent;
-            transition:0.3s;
-        }
-
-        .skill-list li:hover {
-            border-image:var(--gradient) 1;
-            transform:translateY(-5px);
-        }
-
-        /* Projects */
-        .projects-section {
-            background:#0d1324;
-        }
-
-        .projects-container {
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
-            gap:2rem;
-        }
-
-        .project-card {
-            background:var(--glass);
-            padding:2rem;
-            border-radius:16px;
-            border:2px solid transparent;
-            backdrop-filter: blur(10px);
-            transition:0.3s;
-        }
-
-        .project-card:hover {
-            border-image:var(--gradient) 1;
-            transform:translateY(-5px);
-        }
-
-        /* Contact */
-        .contact-content {
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:3rem;
-        }
-
-        #contact-form input,
-        #contact-form textarea {
-            width:100%;
-            padding:12px;
-            margin-bottom:1rem;
-            background:var(--card-bg);
-            border:1px solid rgba(255,255,255,0.15);
-            color:white;
-            border-radius:10px;
-        }
-
-        .submit-btn {
-            background:var(--gradient);
-            padding:12px 30px;
-            border:none;
-            color:white;
-            font-weight:600;
-            border-radius:50px;
-            cursor:pointer;
-        }
-
-        .social-links {
-            display:flex;
-            flex-direction:column;
-            gap:1rem;
-        }
-
-        .social-link {
-            background:var(--card-bg);
-            padding:1rem;
-            border-radius:10px;
-            color:white;
-            text-decoration:none;
-            transition:0.3s;
-        }
-
-        .social-link:hover {
-            transform:translateX(10px);
-            border-image:var(--gradient) 1;
-        }
-
-        footer {
-            text-align:center;
-            padding:20px;
-            background:#080c18;
-            color:var(--subtext);
-        }
-    </style>
+  /* tiny helper */
+  .muted{ color:var(--muted); font-size:14px; }
+  .tag{ padding:6px 10px; border-radius:999px; font-weight:600; font-size:13px; background:rgba(255,255,255,0.03); display:inline-block; color:var(--muted); }
+</style>
 </head>
-
 <body>
 
+<!-- Topbar -->
 <header>
-    <nav>
-        <div class="logo">AR</div>
-        <ul class="nav-menu">
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact-info">Contact</a></li>
-        </ul>
-    </nav>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">AR</div>
+      <div>
+        <h4 style="margin:0">Adishesha R</h4>
+        <div class="mini muted">Backend Java Developer — Bengaluru</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <label for="themeSelect" style="font-weight:700;color:var(--muted);font-size:13px;margin-right:6px">Theme</label>
+      <select id="themeSelect" aria-label="Choose theme">
+        <option value="theme-A">A — Premium Gradient</option>
+        <option value="theme-B">B — Minimal Aqua</option>
+        <option value="theme-C">C — Neon Developer</option>
+        <option value="theme-D">D — Corporate Blue</option>
+      </select>
+
+      <button id="modeToggle" class="toggle-btn" title="Toggle Light / Dark">
+        <span id="modeIcon">🌙</span>
+      </button>
+    </div>
+  </div>
 </header>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>
-            <span class="greeting">Hi, I am</span>
-            <span class="name-highlight">Adishesha R</span>
-            <span class="role">Backend Java Developer</span>
-        </h1>
-        <button onclick="window.location.href='Resume.pdf'" class="resume-btn">
-            Download Resume
+<!-- Main -->
+<main class="wrap" id="mainWrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left reveal" id="heroLeft">
+      <div class="greeting">Hello — I'm</div>
+      <div class="name">Adishesha R</div>
+      <div class="role">Backend Java Developer • Spring Boot • Microservices • GraphQL</div>
+
+      <div class="mini muted">Currently at G10X — B.E. Information Science, Cambridge Institute of Technology</div>
+
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="window.location.href='Resume.pdf'">
+          📄 Resume
         </button>
-    </div>
-</section>
 
-<section id="about" class="about-section">
-    <div class="container about-content">
+        <button class="btn btn-outline" onclick="document.getElementById('contact-info').scrollIntoView({behavior:'smooth'})">
+          ✉ Contact Me
+        </button>
+
+        <a class="btn btn-outline" href="https://adishesha-r.github.io/CHAN_EVENTS/" target="_blank">Visit CHAN_EVENTS</a>
+      </div>
+
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+        <span class="tag">Java</span>
+        <span class="tag">Spring Boot</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">React</span>
+        <span class="tag">GraphQL</span>
+      </div>
+    </div>
+
+    <aside class="hero-card reveal" id="heroRight">
+      <div class="profile-row">
+        <img id="round-image" src="IMG_9578.JPG" alt="Adishesha R" />
         <div>
-            <h2 class="section-title">About Me</h2>
-            <p>
-                I'm Adishesha R, a software developer from Bengaluru. Currently working at G10X, skilled in Java, Spring Boot, MySQL and React.
-            </p>
-            <p>
-                I hold a B.E. in Information Science and love building scalable applications.
-            </p>
+          <div style="font-weight:800;font-size:16px">Adishesha R</div>
+          <div class="mini muted">Backend Java Developer</div>
+          <div style="height:8px"></div>
+          <div class="mini">Available for freelance and full-time opportunities.</div>
         </div>
+      </div>
+
+      <div style="display:flex; gap:12px; margin-top:12px; align-items:center; justify-content:space-between;">
         <div>
-            <img id="round-image" src="IMG_9578.JPG" alt="Profile">
+          <div class="muted" style="font-size:12px">Location</div>
+          <div style="font-weight:700">Bengaluru, India</div>
         </div>
-    </div>
-</section>
 
-<section id="skills" class="skills-section">
-    <div class="container">
-        <h2 class="section-title">Technical Skills</h2>
-        <ul class="skill-list">
-            <li>Java</li>
-            <li>Python</li>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>Manual Testing</li>
-            <li>JavaScript</li>
-            <li>React</li>
-            <li>Hibernate</li>
-        </ul>
-    </div>
-</section>
-
-<section id="projects" class="projects-section">
-    <div class="container">
-        <h2 class="section-title">Projects</h2>
-
-        <div class="projects-container">
-            <div class="project-card">
-                <h3>Book My Doctor</h3>
-                <p>Online doctor appointment system.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Plant Disease Detection</h3>
-                <p>ML project predicting crop diseases.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Gym Management</h3>
-                <p>Entry/exit system using PHP + MySQL.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Employee & Student Management</h3>
-                <p>Role-based Spring Boot project.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Ecommerce (Ongoing)</h3>
-                <p>Spring Boot + H2 + RazorPay.</p>
-            </div>
-
-            <div class="project-card" onclick="window.open('https://adishesha-r.github.io/CHAN_EVENTS/', '_blank')">
-                <h3>CHAN EVENTS</h3>
-                <p>Modern event website (HTML/CSS/JS).</p>
-            </div>
+        <div>
+          <div class="muted" style="font-size:12px">Experience</div>
+          <div style="font-weight:700">3+ Years</div>
         </div>
-    </div>
-</section>
 
-<section id="contact-info" class="contact-section">
-    <div class="container">
-        <h2 class="section-title">Contact Me</h2>
-
-        <div class="contact-content">
-
-            <form id="contact-form" action="https://api.web3forms.com/submit" method="post">
-                <input type="hidden" name="access_key" value="d927908d-2a4e-4c3f-a27a-9e610aa223b6">
-
-                <label>Name:</label>
-                <input type="text" name="username" required>
-
-                <label>Email:</label>
-                <input type="email" name="email" required>
-
-                <label>Message:</label>
-                <textarea name="description" rows="4" required></textarea>
-
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
-
-            <div class="social-links">
-
-                <a href="https://github.com/adishesha-r" class="social-link" target="_blank">GitHub</a>
-
-                <a href="https://www.linkedin.com/in/adishesha-rbharadwaj-388154203" class="social-link" target="_blank">LinkedIn</a>
-
-                <a href="https://wa.me/919380349348?text=Hi%20Adishesha" class="social-link" target="_blank">WhatsApp Chat</a>
-
-            </div>
-
+        <div>
+          <div class="muted" style="font-size:12px">Email</div>
+          <div style="font-weight:700">mycodeadi21@gmail.com</div>
         </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="reveal">
+    <div class="section-title">About Me</div>
+    <div class="about-grid grid">
+      <div class="about-card">
+        <p>
+          I'm <strong>Adishesha R</strong>, a Backend Java Developer from Bengaluru. I work with Java, Spring Boot, Spring Security, JWT,
+          Microservices, and GraphQL. Currently developing scalable microservices-based systems at G10X. I have experience building end-to-end applications including API Gateway, authentication, and cloud deployments.
+        </p>
+
+        <p>
+          My background includes machine learning projects at Pantech Solutions and full-stack work with React and Thymeleaf. I enjoy solving real-world problems and writing clean, maintainable code.
+        </p>
+
+        <p>
+          Education: <strong>B.E. in Information Science</strong> — Cambridge Institute of Technology.
+        </p>
+
+        <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+          <a class="btn btn-outline" href="https://github.com/adishesha-r" target="_blank">GitHub</a>
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/adishesha-rbharadwaj-388154203" target="_blank">LinkedIn</a>
+          <a class="btn btn-outline" href="mailto:mycodeadi21@gmail.com">Email</a>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; flex-direction:column;">
+        <div class="about-card">
+          <div style="font-weight:800">Key Focus</div>
+          <div class="muted" style="margin-top:6px">Scalable backend design, microservices architecture, secure APIs, and efficient data modeling.</div>
+        </div>
+
+        <div class="about-card">
+          <div style="font-weight:800">Recent Work</div>
+          <div class="muted" style="margin-top:6px">
+            - Building an API gateway and securing microservices using JWT and Spring Security.<br/>
+            - Implemented GraphQL endpoints for quiz and question services.<br/>
+            - Working on e-commerce project integration with RazorPay.
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<footer>
-    © 2025 Adishesha R — All Rights Reserved.
-</footer>
+  <!-- SKILLS -->
+  <section id="skills" class="reveal">
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-grid grid">
+      <div class="skill">
+        <div class="meta"><span>Java</span><span>95%</span></div>
+        <div class="bar"><i style="width:95%"></i></div>
+      </div>
 
+      <div class="skill">
+        <div class="meta"><span>Spring Boot</span><span>92%</span></div>
+        <div class="bar"><i style="width:92%"></i></div>
+      </div>
+
+      <div class="skill">
+        <div class="meta"><span>SQL / MySQL</span><span>88%</span></div>
+        <div class="bar"><i style="width:88%"></i></div>
+      </div>
+
+      <div class="skill">
+        <div class="meta"><span>GraphQL</span><span>80%</span></div>
+        <div class="bar"><i style="width:80%"></i></div>
+      </div>
+
+      <div class="skill">
+        <div class="meta"><span>Python</span><span>75%</span></div>
+        <div class="bar"><i style="width:75%"></i></div>
+      </div>
+
+      <div class="skill">
+        <div class="meta"><span>React</span><span>70%</span></div>
+        <div class="bar"><i style="width:70%"></i></div>
+      </div>
+
+      <div class="skill">
+        <div class="meta"><span>Hibernate</span><span>82%</span></div>
+        <div class="bar"><i style="width:82%"></i></div>
+      </div>
+
+      <div class="skill">
+        <div class="meta"><span>Manual Testing</span><span>68%</span></div>
+        <div class="bar"><i style="width:68%"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="reveal">
+    <div class="section-title">Projects</div>
+    <div class="projects-grid grid">
+
+      <article class="project">
+        <h3>Book My Doctor</h3>
+        <div class="meta">Full Stack • Appointment Booking • User Roles</div>
+        <p>
+          A full-stack web application that allows patients to book appointments with doctors online, eliminating the need to wait in long queues.
+          Features include user authentication, role-based access (patients, doctors, admins), appointment scheduling, and notifications.
+        </p>
+        <div class="muted">Technologies: Spring Boot, MySQL, Thymeleaf, JavaScript</div>
+      </article>
+
+      <article class="project">
+        <h3>Plant Disease Detection Using Image</h3>
+        <div class="meta">Machine Learning • Computer Vision</div>
+        <p>
+          Uses machine learning to classify plant diseases from image data, facilitating early detection and improved management strategies.
+          The system includes data preprocessing, model training, and a simple front-end interface to upload images and view predictions.
+        </p>
+        <div class="muted">Technologies: Python, TensorFlow/PyTorch, Flask</div>
+      </article>
+
+      <article class="project">
+        <h3>Gym Management System</h3>
+        <div class="meta">Web App • Attendance Tracking</div>
+        <p>
+          Records entry and exit data in a gym, using HTML and PHP for the front end and a database in the background to store data.
+          Supports member management, attendance logs, and basic reporting for admins.
+        </p>
+        <div class="muted">Technologies: PHP, MySQL, HTML/CSS</div>
+      </article>
+
+      <article class="project">
+        <h3>Employee and Student Management System</h3>
+        <div class="meta">Spring Boot • Role-Based Access</div>
+        <p>
+          Developed an Employee and Student Management System using Spring Boot for the backend. Provides role-based access for admins, employees, and students to manage personal details, attendance, and performance.
+          The system supports CRUD operations, ensuring efficient data handling with a focus on security and scalability.
+        </p>
+        <div class="muted">Technologies: Spring Boot, MySQL, Spring Security</div>
+      </article>
+
+      <article class="project">
+        <h3>Ecommerce (Ongoing)</h3>
+        <div class="meta">Spring Boot • H2 Console • RazorPay</div>
+        <p>
+          Building an e-commerce application using Spring Boot as the backend framework with H2 Console for development. Thymeleaf for frontend templates.
+          Currently implementing cart functionality and payment integration using RazorPay.
+        </p>
+        <div class="muted">Technologies: Spring Boot, Thymeleaf, H2, RazorPay</div>
+      </article>
+
+      <article class="project" onclick="window.open('https://adishesha-r.github.io/CHAN_EVENTS/', '_blank')">
+        <h3>CHAN EVENTS — Event Management</h3>
+        <div class="meta">UI/Frontend • Responsive Design</div>
+        <p>
+          A professional event management website for CHAN EVENTS, showcasing services for weddings, corporate events, birthdays, and premium catering.
+          Features a modern, responsive design with smooth animations and elegant UI.
+        </p>
+        <div class="muted">Technologies: HTML, CSS, JavaScript</div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact-info" class="reveal">
+    <div class="section-title">Contact Me</div>
+
+    <div class="contact-grid grid">
+      <form id="contact-form" action="https://api.web3forms.com/submit" method="post">
+        <input type="hidden" name="access_key" value="d927908d-2a4e-4c3f-a27a-9e610aa223b6" />
+
+        <label class="muted">Name</label>
+        <input type="text" name="username" required />
+
+        <label class="muted">Email</label>
+        <input type="email" name="email" required />
+
+        <label class="muted">Message</label>
+        <textarea name="description" rows="5" required></textarea>
+
+        <div style="display:flex; gap:10px; margin-top:6px">
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <a class="btn btn-outline" href="Resume.pdf" download>Download Resume</a>
+        </div>
+      </form>
+
+      <aside style="display:flex; flex-direction:column; gap:12px;">
+        <div class="about-card">
+          <div style="font-weight:700">Get in touch</div>
+          <div class="muted" style="margin-top:6px">Prefer email? Drop me a message and I'll reply within 48 hours.</div>
+
+          <div style="height:12px"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a class="social-links" href="https://github.com/adishesha-r" target="_blank" style="display:inline-flex; padding:8px 12px; border-radius:10px; text-decoration:none; color:var(--text); background:var(--surface)">GitHub</a>
+            <a class="social-links" href="https://www.linkedin.com/in/adishesha-rbharadwaj-388154203" target="_blank" style="display:inline-flex; padding:8px 12px; border-radius:10px; text-decoration:none; color:var(--text); background:var(--surface)">LinkedIn</a>
+            <a class="social-links" href="mailto:mycodeadi21@gmail.com" style="display:inline-flex; padding:8px 12px; border-radius:10px; text-decoration:none; color:var(--text); background:var(--surface)">Email</a>
+            <a class="social-links" href="https://wa.me/919380349348?text=Hi%20Adishesha" target="_blank" style="display:inline-flex; padding:8px 12px; border-radius:10px; text-decoration:none; color:var(--text); background:var(--surface)">WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="about-card">
+          <div style="font-weight:700">Availability</div>
+          <div class="muted" style="margin-top:6px">Open to full-time and contract roles. Happy to discuss remote-first and hybrid opportunities.</div>
+        </div>
+
+      </aside>
+    </div>
+  </section>
+
+  <footer>© 2025 Adishesha R — All Rights Reserved.</footer>
+</main>
+
+<script>
+  // ---- Theme & Light/Dark Handling ----
+  const themeSelect = document.getElementById('themeSelect');
+  const modeToggle = document.getElementById('modeToggle');
+  const modeIcon = document.getElementById('modeIcon');
+  const root = document.documentElement;
+
+  // initialize from localStorage
+  const savedTheme = localStorage.getItem('portfolioTheme') || 'theme-A';
+  const savedMode = localStorage.getItem('portfolioMode') || 'dark';
+
+  function applyTheme(themeName){
+    // remove previous theme classes
+    root.classList.remove('theme-A','theme-B','theme-C','theme-D');
+    root.classList.add(themeName);
+    themeSelect.value = themeName;
+    localStorage.setItem('portfolioTheme', themeName);
+
+    // set accent solid value for progress bars etc
+    const vars = getComputedStyle(root);
+    // we will use --accent-solid set in CSS theme classes
+  }
+
+  function applyMode(mode){
+    if(mode === 'light'){
+      root.classList.add('light');
+      modeIcon.textContent = '☀️';
+    } else {
+      root.classList.remove('light');
+      modeIcon.textContent = '🌙';
+    }
+    localStorage.setItem('portfolioMode', mode);
+  }
+
+  themeSelect.addEventListener('change', (e) => applyTheme(e.target.value));
+  modeToggle.addEventListener('click', () => {
+    const isLight = root.classList.contains('light');
+    applyMode(isLight ? 'dark' : 'light');
+  });
+
+  // apply initial settings
+  applyTheme(savedTheme);
+  applyMode(savedMode === 'light' ? 'light' : 'dark');
+
+  // ---- Reveal on scroll ----
+  const revealEls = document.querySelectorAll('.reveal');
+  const showOnScroll = () => {
+    const offset = window.innerHeight * 0.85;
+    revealEls.forEach(el => {
+      const top = el.getBoundingClientRect().top;
+      if(top < offset) el.classList.add('show');
+    });
+  };
+  window.addEventListener('scroll', showOnScroll);
+  window.addEventListener('load', () => {
+    showOnScroll();
+    // animate bars (delayed)
+    document.querySelectorAll('.bar > i').forEach((el, idx) => {
+      setTimeout(()=> {
+        el.style.width = el.style.width || el.getAttribute('style').match(/width:(\d+%)/)[1];
+      }, 350 + idx*80);
+    });
+  });
+
+  // ---- Enhance form submission (optional UX) ----
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', (e) => {
+    // allow default submission to web3forms; but show quick feedback
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    // after 3s re-enable (web3forms will redirect or respond)
+    setTimeout(()=> { btn.disabled=false; btn.textContent='Send Message'; }, 4000);
+  });
+
+  // ensure progress bars show initial widths from inline styles
+  document.querySelectorAll('.bar > i').forEach(el => {
+    const w = el.style.width;
+    el.style.width = '0%';
+    setTimeout(()=> el.style.width = w, 400);
+  });
+</script>
 </body>
 </html>
